@@ -1,0 +1,13 @@
+﻿<Grid x:Class="EPlayer.Controls.MediaProgressBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 Loaded="UserControl_Loaded"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Grid.ColumnDefinitions>
+		<ColumnDefinition Width="40"/>
+		<ColumnDefinition Width="*"/>
+		<ColumnDefinition Width="40"/>
+	</Grid.ColumnDefinitions>
+	<Label x:Name="CurrentTimeLabel" Grid.Column="0" VerticalAlignment="Center" Content="00:00"/>
+	<Slider x:Name="PositionSlider" Grid.Column="1" VerticalAlignment="Center" ValueChanged="PositionSlider_ValueChanged" Maximum="1" SmallChange="0.01" LargeChange="0.1"/>
+	<Label x:Name="FullTimeLabel" Grid.Column="2" VerticalAlignment="Center" Content="99:99"/>
+</Grid>

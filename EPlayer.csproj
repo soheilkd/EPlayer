@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources\Player.ico</ApplicationIcon>
+    <StartupObject>EPlayer.App</StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>C:\Program Files\soheilkd\EPlayer\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="EPlayer.Test\**" />
+    <EmbeddedResource Remove="EPlayer.Test\**" />
+    <None Remove="EPlayer.Test\**" />
+    <Page Remove="EPlayer.Test\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Inflatable.Lastfm" Version="1.1.0.339" />
+    <PackageReference Include="LibVLCSharp" Version="3.4.5" />
+    <PackageReference Include="LibVLCSharp.WPF" Version="3.4.5" />
+    <PackageReference Include="SingleInstanceCore" Version="1.0.0" />
+    <PackageReference Include="taglib-sharp-netstandard2.0" Version="2.1.0" />
+    <PackageReference Include="VideoLAN.LibVLC.Windows" Version="3.0.10" />
+  </ItemGroup>
+</Project>

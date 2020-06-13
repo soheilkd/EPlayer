@@ -1,0 +1,29 @@
+﻿<Grid  x:Class="EPlayer.MainContent"
+	xmlns="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:controls1="clr-namespace:EPlayer.Controls" SizeChanged="ContentGrid_SizeChanged"
+	xmlns:tabs="clr-namespace:EPlayer.Tabs" Loaded="ContentGrid_Loaded"
+	x:Name="ContentGrid">
+	<Grid.RowDefinitions>
+		<RowDefinition Height="*"/>
+		<RowDefinition Height="Auto"/>
+	</Grid.RowDefinitions>
+	<TabControl Background="Transparent" BorderThickness="0,1">
+		<tabs:HomeTab AlbumRequested="AlbumsTab_AlbumRequested" ArtistRequested="ArtistsTab_ArtistRequested" Style="{DynamicResource TabWithHeader}"/>
+		<tabs:SongsTab Style="{DynamicResource TabWithHeader}"/>
+		<tabs:ArtistsTab ArtistRequested="ArtistsTab_ArtistRequested" Style="{DynamicResource TabWithHeader}"/>
+		<tabs:AlbumsTab AlbumRequested="AlbumsTab_AlbumRequested" Style="{DynamicResource TabWithHeader}"/>
+		<tabs:VideosTab Style="{DynamicResource TabWithHeader}"/>
+	</TabControl>
+	<controls1:MediaControlBar x:Name="ControlBar" Grid.Row="1" />
+	<controls1:ExtraContentFlyout x:Name="ExtraContent" Grid.RowSpan="1" IsEnabled="False">
+		<UIElement/> <!--IsEnabled is not triggered without content-->
+	</controls1:ExtraContentFlyout>
+	<Grid.Resources>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="/Styles/TabWithHeader.xaml"/>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+	</Grid.Resources>
+</Grid>

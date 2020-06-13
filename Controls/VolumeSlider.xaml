@@ -1,0 +1,9 @@
+﻿<UserControl x:Class="EPlayer.Controls.VolumeSlider" x:Name="ParentControl"
+			 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+			 xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks">
+	<Grid>
+		<!--<icon:PackIconMaterial Kind="Speaker" Height="35" VerticalAlignment="Center"/>-->
+		<Slider x:Name="MainSlider" VerticalAlignment="Center" Margin="25,0,0,0" IsMoveToPointEnabled="True" Minimum="0" Maximum="100" Value="100" ValueChanged="MainSlider_ValueChanged" />
+	</Grid>
+</UserControl>
