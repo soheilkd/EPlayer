@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Windows.Shell;
+using EPlayer.Controls;
+using EPlayer.Extensions;
+using EPlayer.Media;
+using NAudio.Wave;
 
 namespace EPlayer.Taskbar
 {
@@ -17,23 +21,23 @@ namespace EPlayer.Taskbar
 		#region Thumbs
 		private readonly ThumbButtonInfo _PlayThumb = new ThumbButtonInfo()
 		{
-			Description = "Play"
-			//ImageSource = IconProvider.GetBitmap(IconType.Play)
+			Description = "Play",
+			ImageSource = SegoeIcon.Play.Render()
 		};
 		private readonly ThumbButtonInfo _PauseThumb = new ThumbButtonInfo()
 		{
-			Description = "Pause"
-			//ImageSource = IconProvider.GetBitmap(IconType.Pause)
+			Description = "Pause",
+			ImageSource = SegoeIcon.Pause.Render()
 		};
 		private readonly ThumbButtonInfo _PreviousThumb = new ThumbButtonInfo()
 		{
-			Description = "Previous"
-			//ImageSource = IconProvider.GetBitmap(IconType.Previous)
+			Description = "Previous",
+			ImageSource = SegoeIcon.Previous.Render()
 		};
 		private readonly ThumbButtonInfo _NextThumb = new ThumbButtonInfo()
 		{
-			Description = "Next"
-			//ImageSource = IconProvider.GetBitmap(IconType.Next)
+			Description = "Next",
+			ImageSource = SegoeIcon.Next.Render()
 		};
 		#endregion
 
@@ -49,6 +53,19 @@ namespace EPlayer.Taskbar
 			TaskbarInfo = info;
 		}
 
-		public void SetPlayingStateOnThumb(bool isPlaying) => TaskbarInfo.ThumbButtonInfos[1] = isPlaying ? _PauseThumb : _PlayThumb;
+		public void SetPlayingStateOnThumb(bool isPlaying)
+		{
+			//TODO:FIX BUG
+		//	TaskbarInfo.ThumbButtonInfos[1] = isPlaying ? _PauseThumb : _PlayThumb;
+		}
+
+		public void BindMusicPlayer(MusicPlayer player)
+		{
+			PlayRequested += (_, __) => player.Play();
+			PauseRequested += (_, __) => player.Pause();
+			NextRequested += (_, __) => player.Next();
+			PreviousRequested += (_, __) => player.Previous();
+			player.PlaybackStateChanged += (_, e) => SetPlayingStateOnThumb(e.Parameter == PlaybackState.Playing);
+		}
 	}
 }

@@ -29,5 +29,10 @@ namespace EPlayer.Extensions
 		/// <param name="parameter"></param>
 		/// <param name="sender"></param>
 		public static void Invoke<T>(this TypedEventHandler<T> handler, T parameter, object sender = default) => handler?.Invoke(sender, parameter);
+
+		public static void Raise(this FrameworkElement element, RoutedEvent ev)
+		{
+			element.RaiseEvent(new RoutedEventArgs(ev, element));
+		}
 	}
 }

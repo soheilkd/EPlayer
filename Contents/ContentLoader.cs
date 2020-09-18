@@ -10,7 +10,6 @@ using EPlayer.Models;
 namespace EPlayer
 {
 	//TODO: Refactor
-	//TODO: Must refactor, really. it's turning to a spaghetti
 	public static class ContentLoader
 	{
 		private static readonly BitmapImage DefaultArtistImage = SegoeIcon.Person.Render();
@@ -30,10 +29,10 @@ namespace EPlayer
 				Title = artist.Name,
 				ImageSource = DefaultArtistImage
 			};
-			Task.Run(delegate
+			Task.Run(async delegate
 			{
-				LastFM.LoadArtistImage(artist.Name, (image) =>
-					tile.Dispatcher.Invoke(() => tile.ImageSource = image));
+				var image = await ImageController.LoadArtistImage(artist.Name);
+				tile.Dispatcher.Invoke(() => tile.ImageSource = image);
 			});
 			tile.Click += (_, __) => onClick(artist);
 			return tile;
@@ -45,10 +44,10 @@ namespace EPlayer
 				Title = album.Name,
 				ImageSource = DefaultAlbumImage
 			};
-			Task.Run(delegate
+			Task.Run(async delegate
 			{
-				LastFM.LoadAlbumImage(album.Name, (image) =>
-					tile.Dispatcher.Invoke(() => tile.ImageSource = image));
+				var image = await ImageController.LoadAlbumImage(album.Name);
+				tile.Dispatcher.Invoke(() => tile.ImageSource = image);
 			});
 			tile.Click += (_, __) => onClick(album);
 			return tile;

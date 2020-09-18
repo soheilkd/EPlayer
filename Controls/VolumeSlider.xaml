@@ -4,6 +4,6 @@
 			 xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks">
 	<Grid>
 		<!--<icon:PackIconMaterial Kind="Speaker" Height="35" VerticalAlignment="Center"/>-->
-		<Slider x:Name="MainSlider" VerticalAlignment="Center" Margin="25,0,0,0" IsMoveToPointEnabled="True" Minimum="0" Maximum="100" Value="100" ValueChanged="MainSlider_ValueChanged" />
+		<Slider x:Name="MainSlider" VerticalAlignment="Center" Margin="25,0,0,0" IsMoveToPointEnabled="True" Minimum="0" Maximum="1" Value="1" TickFrequency="0.1" ValueChanged="MainSlider_ValueChanged" />
 	</Grid>
 </UserControl>

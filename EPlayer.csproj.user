@@ -7,10 +7,33 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Styles\TabWithHeader.xaml">
+    <Compile Update="Controls\MediaButtons.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Controls\MediaWaveBar.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\NowPlayingView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Windows\MiniWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\MediaButtons.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Controls\MediaWaveBar.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\NowPlayingView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Windows\MiniWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\PropertiesWindow.xaml">

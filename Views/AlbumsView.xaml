@@ -1,0 +1,7 @@
+﻿<ContentControl x:Class="EPlayer.Views.AlbumsView" GotFocus="MetroTabItem_Loaded"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+		<WrapPanel x:Name="MainWrapPanel" VirtualizingPanel.IsVirtualizing="True"/>
+	</ScrollViewer>
+</ContentControl>

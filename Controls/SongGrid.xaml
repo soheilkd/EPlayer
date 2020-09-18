@@ -1,38 +1,21 @@
-﻿<ListView
+﻿<DataGrid
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
 	x:Class="EPlayer.Controls.SongGrid" 
 	ScrollViewer.VerticalScrollBarVisibility="Visible" VirtualizingPanel.ScrollUnit="Pixel"
 	ContextMenuOpening="ListBox_ContextMenuOpening"
-	Background="Transparent"
-	BorderThickness="0"
-	ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-	MouseDoubleClick="DataGrid_MouseDoubleClick"
-	VirtualizingPanel.IsVirtualizing="True" 
-	xmlns:models="clr-namespace:EPlayer.Models" 
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:EPlayer"
-        mc:Ignorable="d"
-	d:DesignWidth="400"
-	d:DesignHeight="200"
-	VirtualizingPanel.VirtualizationMode="Recycling"  
+	ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="Transparent"
+	MouseDoubleClick="DataGrid_MouseDoubleClick" GridLinesVisibility="None"
+	VirtualizingPanel.IsVirtualizing="True"  IsReadOnly="True" CanUserAddRows="False"
+ AutoGenerateColumns="False" Padding="10" CanUserSortColumns="False" SelectionUnit="FullRow"
+	VirtualizingPanel.VirtualizationMode="Recycling"  BorderThickness="0" HeadersVisibility="None"
 	HorizontalContentAlignment="Stretch">
-	<ListView.ItemTemplate>
-		<DataTemplate DataType="{x:Type models:Song}">
-			<Grid HorizontalAlignment="Stretch">
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="3*"/>
-					<ColumnDefinition Width="1*"/>
-					<ColumnDefinition Width="1*"/>
-				</Grid.ColumnDefinitions>
-				<TextBlock Grid.Column="0" Margin="7" FontSize="15" Foreground="#FFF" Text="{Binding Title}"/>
-				<TextBlock Grid.Column="1" Margin="7" FontSize="15" Foreground="#BBB" Text="{Binding Artist}"/>
-				<TextBlock Grid.Column="2" Margin="7" FontSize="15" Foreground="#BBB" Text="{Binding Album}"/>
-			</Grid>
-		</DataTemplate>
-	</ListView.ItemTemplate>
-	<ListView.ContextMenu>
+	<DataGrid.Columns>
+		<DataGridTextColumn Binding="{Binding DisplayName}" FontSize="18" />
+		<DataGridTextColumn Binding="{Binding Artist}" FontSize="16" />
+		<DataGridTextColumn Binding="{Binding Album}" FontSize="16" />
+	</DataGrid.Columns>
+	<DataGrid.ContextMenu>
 		<ContextMenu>
 			<MenuItem Header="Edit Tag In Other App" Click="Menu_EditTag"/>
 			<MenuItem Header="Remove" Click="Menu_RemoveClick"/>
@@ -42,11 +25,11 @@
 			<MenuItem Header="Add To Playlist" x:Name="AddToPlaylistMenu"/>
 			<MenuItem Header="Remove From Playlist" x:Name="RemoveFromPlaylistMenu"/>
 		</ContextMenu>
-	</ListView.ContextMenu>
-	<ListView.Resources>
-		<Style TargetType="{x:Type Hyperlink}">
-			<Setter Property="TextDecorations" Value=""/>
-			<Setter Property="Foreground" Value="#DDD"/>
+	</DataGrid.ContextMenu>
+	<DataGrid.RowStyle>
+		<Style TargetType="DataGridRow" BasedOn="{StaticResource {x:Type DataGridRow}}">
+			<Setter Property="Padding" Value="5"/>
+			<Setter Property="Margin" Value="5"/>
 		</Style>
-	</ListView.Resources>
-</ListView>
+	</DataGrid.RowStyle>
+</DataGrid>

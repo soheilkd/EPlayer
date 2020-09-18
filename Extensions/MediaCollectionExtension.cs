@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using EPlayer.Models;
@@ -8,7 +9,20 @@ namespace EPlayer.Media
 {
 	public static class MediaCollectionExtension
 	{
-		public static void RefreshWithPaths<T>(this List<T> collection, params string[] paths) where T : MediaItem
+
+		/// <summary>
+		/// Get a new list of objects created using <paramref name="func"/>
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="U"></typeparam>
+		/// <param name="collection"></param>
+		/// <param name="func"></param>
+		/// <returns></returns>
+		public static List<U> To<T, U>(this IList<T> collection, Func<T, U> func)
+		{
+			return collection.Select(each => func(each)).ToList();
+		}
+		public static void RefreshWithPaths(this IList<Song> collection, params string[] paths)
 		{
 			for (var i = 0; i < paths.Length; i++)
 			{
@@ -17,7 +31,7 @@ namespace EPlayer.Media
 				AddNewFiles(collection, files);
 			}
 		}
-		public static void RemoveDeletedFiles<T>(this List<T> collection) where T : MediaItem
+		public static void RemoveDeletedFiles(this IList<Song> collection) 
 		{
 			for (var i = 0; i < collection.Count; i++)
 			{
@@ -28,19 +42,16 @@ namespace EPlayer.Media
 				}
 			}
 		}
-		public static void AddNewFiles<T>(this List<T> collection, string[] files) where T : MediaItem
+		public static void AddNewFiles(this IList<Song> collection, string[] files) 
 		{
-			T holder;
-			Type type = typeof(T);
+			Song holder;
 			for (var i = 0; i < files.Length; i++)
 			{
-				if (!collection.Any(video => video.FilePath == files[i]))
+				if (!collection.Any(item => item.FilePath == files[i]))
 				{
-					holder = Activator.CreateInstance(type, files[i]) as T;
+					holder = new Song(files[i]);
 					if (!holder.PossiblyCorrupt)
-					{
-						collection.Add(Activator.CreateInstance(typeof(T), files[i]) as T);
-					}
+						collection.Add(holder);
 				}
 			}
 		}

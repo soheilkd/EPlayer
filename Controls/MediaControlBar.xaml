@@ -3,26 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:EPlayer.Controls"
-             mc:Ignorable="d" 
+             xmlns:local="clr-namespace:EPlayer.Controls" 
+			 mc:Ignorable="d"  Loaded="UserControl_Loaded"
              d:DesignHeight="450" d:DesignWidth="800">
 	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="Auto"/>
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="Auto"/>
 		</Grid.ColumnDefinitions>
-		<Grid x:Name="MediaControlGrid" Height="40" Margin="5">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="40" />
-				<ColumnDefinition Width="40"/>
-				<ColumnDefinition Width="40"/>
-			</Grid.ColumnDefinitions>
-			<local:IconButton x:Name="PreviousButton" Grid.Column="0" Margin="2" Icon="Previous" Click="PreviousButton_Click"/>
-			<local:IconButton x:Name="PlayPauseButton" Grid.Column="1" Margin="2" Icon="Play" Click="PlayPauseButton_Click"/>
-			<local:IconButton x:Name="NextButton" Grid.Column="2" Margin="2" Icon="Next" Click="NextButton_Click"/>
-		</Grid>
-		<local:MediaProgressBar x:Name="ProgressBar" Grid.Column="1"/>
-		<local:VolumeSlider x:Name="VolumeSlider" Grid.Column="2" Width="100" Margin="5"/>
+		<local:MediaButtons x:Name="Controls" Grid.Row="1"/>
+		<local:VolumeSlider x:Name="VolumeSlider" Grid.Column="2" Grid.Row="1" Width="100" Margin="5"/>
+		<local:MediaProgressBar x:Name="ProgressBar" Grid.Column="1" Grid.RowSpan="2" VerticalAlignment="Center"/>
 	</Grid>
 </UserControl>

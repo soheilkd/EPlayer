@@ -1,13 +1,77 @@
-﻿<Grid x:Class="EPlayer.Controls.MediaProgressBar"
+﻿<Slider x:Class="EPlayer.Controls.MediaProgressBar" 
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 			 Loaded="UserControl_Loaded"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Foreground="Red" Background="Transparent" BorderBrush="Transparent" BorderThickness="0"
+	xmlns:adonisExtensions="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI" Height="16" 
+	xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI" xmlns:controls="clr-namespace:EPlayer.Controls" xmlns:converters="clr-namespace:EPlayer.Converters">
+	<Slider.Template>
+		<ControlTemplate TargetType="Slider">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="*" MinHeight="{TemplateBinding MinHeight}"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<Border x:Name="TrackBackground" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="1" Height="4"/>
+				<Track x:Name="PART_Track">
+					<Track.DecreaseRepeatButton>
+						<RepeatButton Command="Slider.DecreaseLarge" Style="{StaticResource SliderButtonStyle}"/>
+					</Track.DecreaseRepeatButton>
+					<Track.IncreaseRepeatButton>
+						<RepeatButton Command="Slider.IncreaseLarge" Style="{StaticResource SliderButtonStyle}"/>
+					</Track.IncreaseRepeatButton>
+					<Track.Thumb>
+						<Thumb Style="{StaticResource SliderThumbStyle}" VerticalAlignment="Stretch" Width="10"/>
+					</Track.Thumb>
+				</Track>
+			</Grid>
+		</ControlTemplate>
+	</Slider.Template>
+	<Slider.Resources>
+		<Style x:Key="SliderButtonStyle" TargetType="{x:Type RepeatButton}">
+			<Setter Property="SnapsToDevicePixels" Value="True"/>
+			<Setter Property="OverridesDefaultStyle" Value="True"/>
+			<Setter Property="IsTabStop" Value="False"/>
+			<Setter Property="Focusable" Value="False"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type RepeatButton}">
+						<Border Background="Transparent"/>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<Style x:Key="SliderThumbStyle" TargetType="{x:Type Thumb}">
+			<Setter Property="Background" Value="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Slider}}}"/>
+			<Setter Property="BorderBrush" Value="{Binding BorderBrush, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Slider}}}"/>
+			<Setter Property="BorderThickness" Value="{Binding BorderThickness, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Slider}}}"/>
+			<Setter Property="SnapsToDevicePixels" Value="True"/>
+			<Setter Property="OverridesDefaultStyle" Value="True"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type Thumb}">
+						<Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="1"/>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+			<Style.Triggers>
+				<Trigger Property="IsMouseOver" Value="True">
+					<Setter Property="Background" Value="Green"/>
+					<Setter Property="BorderBrush" Value="Yellow"/>
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+
+		<controls:TimeConverter x:Key="TimeStringConverter"/>
+		<converters:DoubleToTimeSpanConverter x:Key="TimeIntConverter"/>
+	</Slider.Resources>
+	<!--
 	<Grid.ColumnDefinitions>
 		<ColumnDefinition Width="40"/>
 		<ColumnDefinition Width="*"/>
 		<ColumnDefinition Width="40"/>
 	</Grid.ColumnDefinitions>
 	<Label x:Name="CurrentTimeLabel" Grid.Column="0" VerticalAlignment="Center" Content="00:00"/>
-	<Slider x:Name="PositionSlider" Grid.Column="1" VerticalAlignment="Center" ValueChanged="PositionSlider_ValueChanged" Maximum="1" SmallChange="0.01" LargeChange="0.1"/>
-	<Label x:Name="FullTimeLabel" Grid.Column="2" VerticalAlignment="Center" Content="99:99"/>
-</Grid>
+	<Slider x:Name="PositionSlider" Grid.Column="1" VerticalAlignment="Center" ValueChanged="PositionSlider_ValueChanged"/>
+	<Label x:Name="FullTimeLabel" Grid.Column="2" VerticalAlignment="Center" Content="99:99"/>-->
+</Slider>

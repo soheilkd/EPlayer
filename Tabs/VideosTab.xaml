@@ -1,7 +1,0 @@
-﻿<TabItem x:Class="EPlayer.Tabs.VideosTab"
-				  Header="Videos"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Loaded="MetroTabItem_Loaded"
-				  xmlns:controls="clr-namespace:EPlayer.Controls">
-	<controls:VideoListBox x:Name="MainListBox"/>
-</TabItem>

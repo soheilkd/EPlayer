@@ -4,15 +4,18 @@
 	<Button.Template>
 		<ControlTemplate TargetType="Button">
 			<Border x:Name="root" Background="{Binding Background}">
-				<TextBlock FontFamily="Segoe MDL2 Assets" FontSize="{TemplateBinding FontSize}" Text="{TemplateBinding Content}" Padding="{TemplateBinding Padding}"
+				<Grid>
+					<TextBlock FontFamily="Segoe MDL2 Assets" FontSize="{TemplateBinding FontSize}" Text="{TemplateBinding Content}" Padding="{TemplateBinding Padding}"
 						   VerticalAlignment="Center" HorizontalAlignment="Center"/>
+					<Ellipse x:Name="Ellipse" />
+				</Grid>
 			</Border>
 			<ControlTemplate.Triggers>
 				<Trigger Property="IsMouseOver" Value="True">
-					<Setter TargetName="root" Property="Button.Background" Value="#9999"/>
+					<Setter TargetName="Ellipse" Property="Ellipse.Fill" Value="#4FFF"/>
 				</Trigger>
 				<Trigger Property="ButtonBase.IsPressed" Value="True">
-					<Setter TargetName="root" Property="Button.Background" Value="#6666"/>
+					<Setter TargetName="Ellipse" Property="Ellipse.Fill" Value="#2FFF"/>
 				</Trigger>
 			</ControlTemplate.Triggers>
 		</ControlTemplate>

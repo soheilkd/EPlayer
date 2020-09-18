@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using static EPlayer.Controls.CustomControlHelper;
@@ -24,6 +25,15 @@ namespace EPlayer.Controls
 		public Tile()
 		{
 			InitializeComponent();
+		}
+
+		public void LoadImageFrom(Task<ImageSource> imageLoader)
+		{
+			imageLoader.Start();
+			imageLoader.ContinueWith(image =>
+			{
+				Dispatcher.Invoke(() => ImageSource = image.Result);
+			});
 		}
 	}
 }

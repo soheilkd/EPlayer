@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Runtime;
 using System.Windows;
+using EPlayer.Library;
 using EPlayer.Media;
 using EPlayer.Models;
 using SingleInstanceCore;
@@ -10,10 +11,10 @@ namespace EPlayer
 	public partial class App : Application, ISingleInstance
 	{
 		public static readonly string Path = @"C:\Program Files\soheilkd\EPlayer\";
+		public static event TypedEventHandler<string[]> InstanceInvoked;
 
-		public static event TypedEventHandler<string[]> NewInstanceRequested;
 		public static MusicPlayer MusicPlayer { get; } = new MusicPlayer();
-		public static ImageCache Metadata { get; set; } = new ImageCache();
+		public static MusicLibrary MusicLibrary { get; } = new MusicLibrary();
 
 		public App()
 		{
@@ -29,11 +30,20 @@ namespace EPlayer
 
 		private void Application_Exit(object sender, ExitEventArgs e)
 		{
+			MusicPlayer.Stop();
 			SingleInstance<App>.Cleanup();
 			KeyboardHook.Unhook();
-			Library.Save();
+			MusicLibrary.Save();
 		}
 
-		public void OnInstanceInvoked(string[] args) => NewInstanceRequested?.Invoke(this, args.ToArray());
+		public void OnInstanceInvoked(string[] args)
+		{
+			var playSong = new TypedEventHandler<Song>((_, e) => MusicPlayer.Play(e));
+			MusicLibrary.NewSongAdded += playSong;
+			MusicLibrary.ReadNewData(args);
+			MusicLibrary.NewSongAdded -= playSong;
+
+			InstanceInvoked?.Invoke(this, args);
+		}
 	}
 }

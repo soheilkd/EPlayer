@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Controls;
-using System.Windows.Media;
 using EPlayer.Controls;
 using EPlayer.Extensions;
+using EPlayer.Media;
 using EPlayer.Models;
 
 namespace EPlayer.Contents
@@ -23,7 +21,7 @@ namespace EPlayer.Contents
 
 		public void LoadForAlbum(Album album)
 		{
-			MainListBox.Songs = album.Songs;
+			MainListBox.Songs = new SongQueue(album.Songs);
 			TitleTextBlock.Text = album.Name;
 			MainImage.Source = SegoeIcon.Album.Render();
 			Task.Run(() => LoadImage(album));
@@ -32,7 +30,7 @@ namespace EPlayer.Contents
 		private async void LoadImage(Album album)
 		{
 			await Task.Delay(1); //Ignore error
-			ImageSource image = album.Songs.First().GetImage();
+			var image = await ImageController.LoadAlbumImage(album.Name);
 			Dispatcher.Invoke(delegate { MainImage.Source = image; });
 		}
 	}

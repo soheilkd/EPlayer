@@ -20,7 +20,7 @@ namespace EPlayer.Windows
 		};
 		//private readonly Song song;
 
-		public PropertiesWindow(MediaItem item) : base()
+		public PropertiesWindow(Song item) : base()
 		{
 			TitleBox.Text = item.Title;
 			//AlbumBox.Text = item.Album;

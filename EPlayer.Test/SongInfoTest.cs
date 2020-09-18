@@ -16,7 +16,7 @@ namespace EPlayer.Test
 		public void TestReadingSample()
 		{
 			var sample = new Song(SamplePath);
-
+			
 			Assert.IsFalse(sample.PossiblyCorrupt);
 		}
 		[TestMethod]

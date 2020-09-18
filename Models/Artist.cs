@@ -6,28 +6,19 @@ namespace EPlayer.Models
 	[Serializable]
 	public class Artist
 	{
-		public string Name { get; set; }
-		public string ImageUri { get; set; }
-		public List<Album> Albums { get; set; }
+		public string Name { get; set; } = "Unknown Artist";
+		public List<Album> Albums { get; set; } = new List<Album>();
 		public IEnumerable<Song> Songs
 		{
 			get
 			{
 				foreach (Album album in Albums)
-				{
 					foreach (Song song in album.Songs)
-					{
 						yield return song;
-					}
-				}
 			}
 		}
 
 		public Artist() { }
-		public Artist(Album album)
-		{
-			Name = album.Artist;
-			Albums = new List<Album> { album };
-		}
+		public Artist(string name) => Name = name;
 	}
 }

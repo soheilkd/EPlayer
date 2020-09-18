@@ -2,38 +2,34 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using EPlayer.Converters;
+using EPlayer.Extensions;
 
 namespace EPlayer.Controls
 {
-	public partial class MediaProgressBar : Grid
+	public partial class MediaProgressBar : Slider
 	{
-		public event TypedEventHandler<long> PositionChanged;
-		//To make sure user is the one changing position, not the application (such as media progress)
-		public bool IsUserChangingPosition { get; set; } = false;
-
-		private readonly Stopwatch watch = new Stopwatch(); //To send PositionChanged every 50ms, not constantly
-		public long WatchElapsedMilliseconds => watch.ElapsedMilliseconds; //To measure how long song is played constantly
-
+		/*
 		#region Properties
-		private long duration;
-		public long Duration
+		private TimeSpan length = TimeSpan.Zero;
+		public TimeSpan Length
 		{
-			get => duration;
+			get => length;
 			set
 			{
-				duration = value;
+				length = value;
 				Dispatcher.Invoke(delegate
 				{
-					FullTimeLabel.Content = FormatTimeSpan(TimeSpan.FromMilliseconds(value));
-					PositionSlider.Maximum = value;
-					PositionSlider.SmallChange = value / 100;
-					PositionSlider.LargeChange = value / 10;
+					FullTimeLabel.Content = value.FormatToString();
+					PositionSlider.Maximum = value.TotalMilliseconds;
+					PositionSlider.SmallChange = value.TotalMilliseconds / 100;
+					PositionSlider.LargeChange = value.TotalMilliseconds / 10;
 				});
 			}
 		}
 
-		private long position;
-		public long Position
+		private TimeSpan position = TimeSpan.Zero;	
+		public TimeSpan Position
 		{
 			get => position;
 			set
@@ -41,54 +37,32 @@ namespace EPlayer.Controls
 				position = value;
 				if (IsUserChangingPosition)
 					PositionChanged?.Invoke(this, value);
-
 				Dispatcher.Invoke(delegate
 				{
-					CurrentTimeLabel.Content = FormatTimeSpan(TimeSpan.FromMilliseconds(value));
-					PositionSlider.Value = value;
+					CurrentTimeLabel.Content = value.FormatToString();
+					PositionSlider.Value = value.TotalMilliseconds;
 				});
 			}
 		}
 
-		#endregion
-		public MediaProgressBar()
-		{
-			InitializeComponent();
-		}
-
-		public void SlidePosition(FlowDirection direction, bool small = true)
-		{
-			if (direction == FlowDirection.LeftToRight)
-			{
-				PositionSlider.Value += small ? PositionSlider.SmallChange : PositionSlider.LargeChange;
-			}
-			else
-			{
-				PositionSlider.Value -= small ? PositionSlider.SmallChange : PositionSlider.LargeChange;
-			}
-		}
-
-		private static string FormatTimeSpan(TimeSpan timeSpan) => string.Format("{0:mm\\:ss}", timeSpan);
-		//Idk where this came from, but I'll keep it anyway to test if it works better than formatting
-		private static string FormatTimeSpan2(TimeSpan time) => time.ToString("c").Substring(3, 5);
+		#endregion*/
+		public MediaProgressBar() => InitializeComponent();
 
 		private void UserControl_Loaded(object sender, RoutedEventArgs e)
 		{
-			PreviewMouseDown += (_, __) => IsUserChangingPosition = true;
-			PreviewMouseUp += (_, __) => IsUserChangingPosition = false;
-			MouseLeave += (_, __) => IsUserChangingPosition = false;
-		}
 
-		private void PositionSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		}
+	}
+
+	public class TimeConverter : ValueConverter<double, string, object>
+	{
+		public override string Convert(double value, object parameter)
 		{
-			if (IsUserChangingPosition)
-			{
-				if (watch.ElapsedMilliseconds > 100 || !watch.IsRunning)
-				{
-					Position = (long)e.NewValue;
-					watch.Restart();
-				}
-			}
+			return TimeSpan.FromSeconds(value).FormatToString();
+		}
+		public override double ConvertBack(string value, object parameter)
+		{
+			return double.Parse(value);
 		}
 	}
 }

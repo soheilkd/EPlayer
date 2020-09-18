@@ -16,3 +16,8 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Usage", "CA2235:Mark all non-serializable fields", Justification = "<Pending>", Scope = "member", Target = "~F:EPlayer.Media.LibraryData.Albums")]
 [assembly: SuppressMessage("Usage", "CA2235:Mark all non-serializable fields", Justification = "<Pending>", Scope = "member", Target = "~F:EPlayer.Media.LibraryData.Songs")]
 [assembly: SuppressMessage("Usage", "CA2235:Mark all non-serializable fields", Justification = "<Pending>", Scope = "member", Target = "~F:EPlayer.Media.LibraryData.Playlists")]
+[assembly: SuppressMessage("Usage", "CA2235:Mark all non-serializable fields", Justification = "<Pending>", Scope = "member", Target = "~P:EPlayer.Models.Song.Artist")]
+[assembly: SuppressMessage("Usage", "CA2235:Mark all non-serializable fields", Justification = "<Pending>", Scope = "member", Target = "~P:EPlayer.Models.Song.Album")]
+[assembly: SuppressMessage("Usage", "CA2235:Mark all non-serializable fields", Justification = "<Pending>", Scope = "member", Target = "~P:EPlayer.Models.Song.AlbumArtist")]
+[assembly: SuppressMessage("Style", "IDE0046:Convert to conditional expression", Justification = "Readability", Scope = "member", Target = "~M:EPlayer.ImageController.LoadFromCache(System.String)~System.Windows.Media.Imaging.BitmapSource")]
+[assembly: SuppressMessage("Style", "IDE0046:Convert to conditional expression", Justification = "Readability", Scope = "member", Target = "~M:EPlayer.ImageController.LoadImage(System.String,System.Func{System.String,System.Threading.Tasks.Task{System.Windows.Media.Imaging.BitmapImage}})~System.Threading.Tasks.Task{System.Windows.Media.Imaging.BitmapSource}")]
