@@ -2,6 +2,7 @@
 using System.Windows.Shell;
 using EPlayer.Controls;
 using EPlayer.Extensions;
+using EPlayer.Imaging;
 using EPlayer.Media;
 using NAudio.Wave;
 
@@ -22,22 +23,22 @@ namespace EPlayer.Taskbar
 		private readonly ThumbButtonInfo _PlayThumb = new ThumbButtonInfo()
 		{
 			Description = "Play",
-			ImageSource = SegoeIcon.Play.Render()
+			ImageSource = ControlRenderer.RenderIcon(SegoeIcon.Play)
 		};
 		private readonly ThumbButtonInfo _PauseThumb = new ThumbButtonInfo()
 		{
 			Description = "Pause",
-			ImageSource = SegoeIcon.Pause.Render()
+			ImageSource = ControlRenderer.RenderIcon(SegoeIcon.Pause)
 		};
 		private readonly ThumbButtonInfo _PreviousThumb = new ThumbButtonInfo()
 		{
 			Description = "Previous",
-			ImageSource = SegoeIcon.Previous.Render()
+			ImageSource = ControlRenderer.RenderIcon(SegoeIcon.Previous)
 		};
 		private readonly ThumbButtonInfo _NextThumb = new ThumbButtonInfo()
 		{
 			Description = "Next",
-			ImageSource = SegoeIcon.Next.Render()
+			ImageSource = ControlRenderer.RenderIcon(SegoeIcon.Next)
 		};
 		#endregion
 

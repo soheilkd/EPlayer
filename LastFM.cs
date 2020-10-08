@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using EPlayer.Extensions;
+using EPlayer.Imaging;
 using IF.Lastfm.Core.Api;
 using static EPlayer.Windows.LastFMSecrets;
 
@@ -38,7 +39,8 @@ namespace EPlayer
 			{
 				using var client = new WebClient();
 				var data = await client.DownloadDataTaskAsync(uri);
-				return data.ToBitmap();
+				var bitmap = EncodingHelper.GetBitmapImage(data);
+				return bitmap;
 			}
 			catch (Exception)
 			{

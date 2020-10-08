@@ -17,5 +17,7 @@ namespace EPlayer.Models
 			Artist = song.AlbumArtist;
 			Songs = new List<Song>() { song };
 		}
+
+		public override string ToString() => Name;
 	}
 }

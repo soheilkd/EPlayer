@@ -4,13 +4,13 @@ using System.Windows;
 using EPlayer.Library;
 using EPlayer.Media;
 using EPlayer.Models;
+using EPlayer.Serialization;
 using SingleInstanceCore;
 
 namespace EPlayer
 {
 	public partial class App : Application, ISingleInstance
 	{
-		public static readonly string Path = @"C:\Program Files\soheilkd\EPlayer\";
 		public static event TypedEventHandler<string[]> InstanceInvoked;
 
 		public static MusicPlayer MusicPlayer { get; } = new MusicPlayer();
@@ -18,7 +18,7 @@ namespace EPlayer
 
 		public App()
 		{
-			ProfileOptimization.SetProfileRoot(Path);
+			ProfileOptimization.SetProfileRoot(PathHelper.AppdataPath);
 			ProfileOptimization.StartProfile("RuntimeProfile.jit");
 		}
 

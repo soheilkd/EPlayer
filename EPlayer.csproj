@@ -22,20 +22,15 @@
   <ItemGroup>
     <PackageReference Include="AdonisUI" Version="1.16.0" />
     <PackageReference Include="AdonisUI.ClassicTheme" Version="1.16.0" />
+    <PackageReference Include="CSCore" Version="1.2.1.2" />
     <PackageReference Include="Inflatable.Lastfm" Version="1.2.0" />
     <PackageReference Include="NAudio" Version="1.10.0" />
     <PackageReference Include="SingleInstanceCore" Version="1.0.0" />
     <PackageReference Include="taglib-sharp-netstandard2.0" Version="2.1.0" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Image\" />
     <Folder Include="Styles\" />
     <Folder Include="Tabs\" />
     <Folder Include="ViewModels\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="CSCore">
-      <HintPath>Lib\CSCore.dll</HintPath>
-    </Reference>
   </ItemGroup>
 </Project>

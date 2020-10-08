@@ -46,7 +46,7 @@ namespace EPlayer.Audio
 			}
 			set
 			{
-				if (Reader == null)
+				if (Reader == null || Reader.Position == default)
 					return;
 				var rate = Reader.Position / Position.TotalMilliseconds;
 				Reader.Position = (long)(value.TotalMilliseconds * rate);
@@ -115,6 +115,8 @@ namespace EPlayer.Audio
 		}
 		public void Stop()
 		{
+			if (WaveOut == null)
+				return;
 			WaveOut.Stop();
 			PlaybackStateChanged.Invoke(PlaybackState.Stopped);
 			WaveOut.Dispose();

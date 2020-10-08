@@ -6,51 +6,45 @@ using System.Windows.Media.Imaging;
 using EPlayer.Controls;
 using EPlayer.Extensions;
 using EPlayer.Models;
+using EPlayer.Pages;
+using EPlayer.Windows;
 
 namespace EPlayer
 {
 	//TODO: Refactor
 	public static class ContentLoader
 	{
-		private static readonly BitmapImage DefaultArtistImage = SegoeIcon.Person.Render();
-		private static readonly BitmapImage DefaultAlbumImage = SegoeIcon.Home.Render();
-
 		public static void LoadTiles(WrapPanel panel, IEnumerable<Tile> tiles)
 		{
 			foreach (Tile tile in tiles)
 				panel.Children.Add(tile);
 		}
 
-		//TODO: These 2 need to be more descriptive
-		public static Tile GetTileForArtist(Artist artist, Action<Artist> onClick)
+		public static Tile GetTile<T>(T obj, Func<string, Task<BitmapSource>> imageLoader, Func<Page> pageLoader)
 		{
-			var tile = new Tile()
-			{
-				Title = artist.Name,
-				ImageSource = DefaultArtistImage
-			};
+			var tile = new Tile() { Title = obj.ToString() };
 			Task.Run(async delegate
 			{
-				var image = await ImageController.LoadArtistImage(artist.Name);
+				var image = await imageLoader(obj.ToString());
 				tile.Dispatcher.Invoke(() => tile.ImageSource = image);
 			});
-			tile.Click += (_, __) => onClick(artist);
+			tile.Click += (_, __) => MainWindow.RequestPage(pageLoader());
 			return tile;
 		}
-		public static Tile GetTileForAlbum(Album album, Action<Album> onClick)
+
+		//TODO: These 2 need to be more descriptive
+		public static Tile GetTileForArtist(Artist artist)
 		{
-			var tile = new Tile()
-			{
-				Title = album.Name,
-				ImageSource = DefaultAlbumImage
-			};
-			Task.Run(async delegate
-			{
-				var image = await ImageController.LoadAlbumImage(album.Name);
-				tile.Dispatcher.Invoke(() => tile.ImageSource = image);
-			});
-			tile.Click += (_, __) => onClick(album);
-			return tile;
+			return GetTile(artist,
+				ImageController.LoadArtistImage,
+				() => new ArtistPage(artist));
+		}
+
+		public static Tile GetTileForAlbum(Album album)
+		{
+			return GetTile(album,
+				ImageController.LoadAlbumImage,
+				() => new AlbumPage(album));
 		}
 	}
 }

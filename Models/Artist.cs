@@ -20,5 +20,7 @@ namespace EPlayer.Models
 
 		public Artist() { }
 		public Artist(string name) => Name = name;
+
+		public override string ToString() => Name;
 	}
 }

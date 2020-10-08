@@ -15,11 +15,7 @@ namespace EPlayer.Views
 
 		private void MetroTabItem_Loaded(object sender, RoutedEventArgs e)
 		{
-			void onClick(Artist artist) => MainWindow.RequestArtist(artist);
-			var tiles =
-				from artist
-				in App.MusicLibrary.Artists
-				select ContentLoader.GetTileForArtist(artist, onClick);
+			var tiles = App.MusicLibrary.Artists.Select(artist => ContentLoader.GetTileForArtist(artist));
 			ContentLoader.LoadTiles(MainWrapPanel, tiles);
 		}
 	}

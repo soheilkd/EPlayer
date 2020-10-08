@@ -10,10 +10,19 @@
     <Compile Update="Controls\MediaButtons.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Controls\MediaWaveBar.xaml.cs">
+    <Compile Update="Pages\AlbumPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\ArtistPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pages\MainPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\NowPlayingView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Window1.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Windows\MiniWindow.xaml.cs">
@@ -24,10 +33,19 @@
     <Page Update="Controls\MediaButtons.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Controls\MediaWaveBar.xaml">
+    <Page Update="Pages\AlbumPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\ArtistPage.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pages\MainPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\NowPlayingView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Window1.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Windows\MainWindow.xaml">

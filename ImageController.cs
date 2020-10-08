@@ -1,40 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using EPlayer.Controls;
 using EPlayer.Extensions;
+using EPlayer.Imaging;
+using EPlayer.Serialization;
 
 namespace EPlayer
 {
+	//TODO: Refactor
 	public static class ImageController
 	{
-		private static readonly Dictionary<string, BitmapSource> cache = new Dictionary<string, BitmapSource>();
-		private static readonly string ImageCacheFolder = App.Path + "Cache\\";
+		private static readonly Dictionary<string, BitmapSource> Cache = new Dictionary<string, BitmapSource>();
+		private static readonly string ImageCacheFolder = PathHelper.AppdataPath + "Cache\\";
 
-		public static readonly BitmapSource DefaultAlbumImage = SegoeIcon.Album.Render();
-		public static readonly BitmapSource DefaultArtistImage = SegoeIcon.Person.Render();
+		public static readonly BitmapSource DefaultAlbumImage = ControlRenderer.RenderIcon(SegoeIcon.Album);
+		public static readonly BitmapSource DefaultArtistImage = ControlRenderer.RenderIcon(SegoeIcon.Person);
 
-		public static async Task<BitmapSource> LoadArtistImage(string artist) 
+		private static async Task<BitmapSource> LoadImage(string key, Func<string, Task<BitmapImage>> loader)
 		{
-			var key = $"artist%{artist}";
-			return await LoadImage(key,
-				downloader: LastFM.DownloadArtistImage)
-				?? DefaultArtistImage;
-		}
-		public static async Task<BitmapSource> LoadAlbumImage(string album)
-		{
-			var key = $"album%{album}";
-			return await LoadImage(key,
-				downloader: LastFM.DownloadAlbumImage)
-				?? DefaultAlbumImage;
-		}
-
-
-		private static async Task<BitmapSource> LoadImage(string key, Func<string, Task<BitmapImage>> downloader)
-		{
-			//First, try loading from cache
+			//Try loading from cache
 			var image = LoadFromCache(key);
 			if (image != default)
 				return image;
@@ -46,31 +34,32 @@ namespace EPlayer
 					return image;
 				else
 				{
-					//Try downloading image
-					image = await Download(key, downloader);
+					//Try image loader
+					image = await LoadAndCache(key, loader);
 					if (image != default)
 						return image;
-					else //Failed to get image. Return default
-						return default;
 				}
 			}
+
+			//Failed to get image. Return default
+			return default;
 		}
 
 
 		private static BitmapSource LoadFromCache(string key)
 		{
-			if (cache.ContainsKey(key))
-				return cache[key];
+			if (Cache.ContainsKey(key))
+				return Cache[key];
 			else
 				return default;
 		}
 
-		private static async Task<BitmapSource> Download(string key, Func<string, Task<BitmapImage>> downloader)
+		private static async Task<BitmapSource> LoadAndCache(string key, Func<string, Task<BitmapImage>> Loader)
 		{
-			var image = await downloader(key);
+			var image = await Loader(key);
 			if (image != default)
 			{
-				cache.Add(key, image);
+				Cache.Add(key, image);
 				SaveToDisk(key, image);
 			}
 			return image;
@@ -81,9 +70,9 @@ namespace EPlayer
 			if (File.Exists(path))
 			{
 				var data = await File.ReadAllBytesAsync(path);
-				var result = data.ToBitmap();
-				cache.Add(key, result);
-				return result;
+				var bitmap = EncodingHelper.GetBitmapImage(data);
+				Cache.Add(key, bitmap);
+				return bitmap;
 			}
 			else
 				return default;
@@ -91,8 +80,22 @@ namespace EPlayer
 		private static void SaveToDisk(string key, BitmapImage image)
 		{
 			var path = ImageCacheFolder + key;
-			var data = image.ToData();
+			var data = image.ToBytes();
 			File.WriteAllBytes(path, data);
 		}
+
+		public static async Task<BitmapSource> LoadArtistImage(string artist)
+		{
+			var key = $"artist%{artist}";
+			return await LoadImage(key,
+				loader: LastFM.DownloadArtistImage)
+				?? DefaultArtistImage;
+		}
+		public static async Task<BitmapSource> LoadAlbumImage(string album)
+		{
+			var key = $"album%{album}";
+			var image = await LoadImage(key, LastFM.DownloadAlbumImage);
+            return image != default ? image : DefaultAlbumImage;
+        }
 	}
 }

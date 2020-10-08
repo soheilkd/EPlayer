@@ -11,6 +11,6 @@
 		<local:IconButton x:Name="PreviousButton" Grid.Column="0" Margin="2" Icon="Previous" Click="PreviousButton_Click"/>
 		<local:IconButton x:Name="PlayPauseButton" Grid.Column="1" Margin="-8" Height="40" Width="40" Icon="Play" Click="PlayPauseButton_Click"/>
 		<local:IconButton x:Name="NextButton" Grid.Column="2" Margin="2" Icon="Next" Click="NextButton_Click"/>
-		<Ellipse Grid.Column="1" Stroke="#6000"  StrokeDashCap="Square"  StrokeDashArray="1.5" StrokeThickness="2"/>
+		<Ellipse Grid.Column="1" Stroke="#6000" StrokeThickness="2"/>
 	</Grid>
 </UserControl>

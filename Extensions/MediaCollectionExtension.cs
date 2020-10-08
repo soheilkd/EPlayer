@@ -9,19 +9,6 @@ namespace EPlayer.Media
 {
 	public static class MediaCollectionExtension
 	{
-
-		/// <summary>
-		/// Get a new list of objects created using <paramref name="func"/>
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <typeparam name="U"></typeparam>
-		/// <param name="collection"></param>
-		/// <param name="func"></param>
-		/// <returns></returns>
-		public static List<U> To<T, U>(this IList<T> collection, Func<T, U> func)
-		{
-			return collection.Select(each => func(each)).ToList();
-		}
 		public static void RefreshWithPaths(this IList<Song> collection, params string[] paths)
 		{
 			for (var i = 0; i < paths.Length; i++)

@@ -1,33 +1,16 @@
 ﻿<Slider x:Class="EPlayer.Controls.MediaProgressBar" 
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-			 Loaded="UserControl_Loaded"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Foreground="Red" Background="Transparent" BorderBrush="Transparent" BorderThickness="0"
-	xmlns:adonisExtensions="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI" Height="16" 
-	xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI" xmlns:controls="clr-namespace:EPlayer.Controls" xmlns:converters="clr-namespace:EPlayer.Converters">
-	<Slider.Template>
-		<ControlTemplate TargetType="Slider">
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto"/>
-					<RowDefinition Height="*" MinHeight="{TemplateBinding MinHeight}"/>
-					<RowDefinition Height="Auto"/>
-				</Grid.RowDefinitions>
-				<Border x:Name="TrackBackground" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="1" Height="4"/>
-				<Track x:Name="PART_Track">
-					<Track.DecreaseRepeatButton>
-						<RepeatButton Command="Slider.DecreaseLarge" Style="{StaticResource SliderButtonStyle}"/>
-					</Track.DecreaseRepeatButton>
-					<Track.IncreaseRepeatButton>
-						<RepeatButton Command="Slider.IncreaseLarge" Style="{StaticResource SliderButtonStyle}"/>
-					</Track.IncreaseRepeatButton>
-					<Track.Thumb>
-						<Thumb Style="{StaticResource SliderThumbStyle}" VerticalAlignment="Stretch" Width="10"/>
-					</Track.Thumb>
-				</Track>
-			</Grid>
-		</ControlTemplate>
-	</Slider.Template>
+			 Loaded="UserControl_Loaded" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Foreground="Red" Background="#3FFF" BorderBrush="#5FFF" BorderThickness="1"
+		xmlns:controls="clr-namespace:EPlayer.Controls" xmlns:converters="clr-namespace:EPlayer.Converters">
+
 	<Slider.Resources>
+		<converters:DoubleToTimeStringConverter x:Key="TimeStringConverter"/>
+		<converters:DoubleToTimeSpanConverter x:Key="TimeIntConverter"/>
+		<Style TargetType="TextBlock">
+			<Setter Property="Foreground" Value="#EFFF"/>
+			<Setter Property="Margin" Value="5"/>
+		</Style>
 		<Style x:Key="SliderButtonStyle" TargetType="{x:Type RepeatButton}">
 			<Setter Property="SnapsToDevicePixels" Value="True"/>
 			<Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -42,36 +25,51 @@
 			</Setter>
 		</Style>
 		<Style x:Key="SliderThumbStyle" TargetType="{x:Type Thumb}">
-			<Setter Property="Background" Value="{Binding Background, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Slider}}}"/>
-			<Setter Property="BorderBrush" Value="{Binding BorderBrush, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Slider}}}"/>
-			<Setter Property="BorderThickness" Value="{Binding BorderThickness, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Slider}}}"/>
-			<Setter Property="SnapsToDevicePixels" Value="True"/>
-			<Setter Property="OverridesDefaultStyle" Value="True"/>
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="{x:Type Thumb}">
-						<Border Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="1"/>
+						<Border Background="#777" BorderThickness="2" BorderBrush="#6FFF" CornerRadius="10"/>
 					</ControlTemplate>
 				</Setter.Value>
 			</Setter>
 			<Style.Triggers>
 				<Trigger Property="IsMouseOver" Value="True">
-					<Setter Property="Background" Value="Green"/>
-					<Setter Property="BorderBrush" Value="Yellow"/>
+					<Setter Property="Background" Value="#6FFF"/>
+					<Setter Property="BorderBrush" Value="#AFFF"/>
+				</Trigger>
+				<Trigger Property="IsDragging" Value="True">
+					<Setter Property="Background" Value="Yellow"/>
 				</Trigger>
 			</Style.Triggers>
 		</Style>
 
-		<controls:TimeConverter x:Key="TimeStringConverter"/>
-		<converters:DoubleToTimeSpanConverter x:Key="TimeIntConverter"/>
 	</Slider.Resources>
-	<!--
-	<Grid.ColumnDefinitions>
-		<ColumnDefinition Width="40"/>
-		<ColumnDefinition Width="*"/>
-		<ColumnDefinition Width="40"/>
-	</Grid.ColumnDefinitions>
-	<Label x:Name="CurrentTimeLabel" Grid.Column="0" VerticalAlignment="Center" Content="00:00"/>
-	<Slider x:Name="PositionSlider" Grid.Column="1" VerticalAlignment="Center" ValueChanged="PositionSlider_ValueChanged"/>
-	<Label x:Name="FullTimeLabel" Grid.Column="2" VerticalAlignment="Center" Content="99:99"/>-->
+	<Slider.Template>
+		<ControlTemplate TargetType="Slider">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="40"/>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="40"/>
+				</Grid.ColumnDefinitions>
+				<TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{TemplateBinding Value, Converter={StaticResource TimeStringConverter}}"/>
+				<TextBlock Grid.Column="2" VerticalAlignment="Center" Text="{TemplateBinding Maximum, Converter={StaticResource TimeStringConverter}}"/>
+				<Border x:Name="TrackBackground" Grid.Column="1" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="1" Height="4"/>
+				<Track x:Name="PART_Track" Grid.Column="1" Height="20">
+					<Track.DecreaseRepeatButton>
+						<RepeatButton Command="Slider.DecreaseLarge" Style="{StaticResource SliderButtonStyle}"/>
+					</Track.DecreaseRepeatButton>
+					<Track.IncreaseRepeatButton>
+						<RepeatButton Command="Slider.IncreaseLarge" Style="{StaticResource SliderButtonStyle}"/>
+					</Track.IncreaseRepeatButton>
+					<Track.Thumb>
+						<Thumb Style="{StaticResource SliderThumbStyle}" VerticalAlignment="Stretch" Width="20"/>
+					</Track.Thumb>
+				</Track>
+			</Grid>
+		</ControlTemplate>
+	</Slider.Template>
 </Slider>

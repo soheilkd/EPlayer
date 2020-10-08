@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using EPlayer.Controls;
+﻿using EPlayer.Controls;
 using EPlayer.Extensions;
+using EPlayer.Imaging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Media;
 using TagLib;
 using static System.IO.Path;
 
@@ -62,17 +60,9 @@ namespace EPlayer.Models
 		{
 			get
 			{
-				if (imageCache != default)
-					return imageCache;
-				try
-				{
-					using var file = File.Create(FilePath);
-					var pic = file.Tag.Pictures.FirstOrDefault();
-					var picsToByte = pic != default ? pic.Data.ToArray() : default; //TODO:Refactor
-					imageCache = picsToByte != default ? picsToByte.GetImageSource() : SegoeIcon.LikeFilled.Render();
-					return imageCache;
-				}
-				catch (Exception) { return default; }
+				if (imageCache == default)
+					LoadImage();
+				return imageCache;
 			}
 		}
 
@@ -105,7 +95,7 @@ namespace EPlayer.Models
 		public bool IsIn(Album album) => album.Songs.Contains(this);
 		public bool DoesPairWith(Album album) => album.Name == Album && album.Artist == AlbumArtist;
 
-		 void ReadInfoFromFile(File file)
+		void ReadInfoFromFile(File file)
 		{
 			Tag tag = file.Tag;
 			Title = tag.Title;
@@ -124,6 +114,26 @@ namespace EPlayer.Models
 			Year = tag.Year;
 			Genres = tag.Genres;
 			Lyrics = tag.Lyrics;
+		}
+
+		private void LoadImage()
+		{
+			try
+			{
+				using var file = File.Create(FilePath);
+				var pic = file.Tag.Pictures.FirstOrDefault();
+				if (pic != default)
+				{
+					var picBytes = pic.Data.ToArray();
+					imageCache = EncodingHelper.GetImageSource(picBytes);
+				}
+				else
+					imageCache = ControlRenderer.RenderIcon(SegoeIcon.Home); //Temp
+			}
+			catch (Exception)
+			{
+				imageCache = ControlRenderer.RenderIcon(SegoeIcon.Home); //Temp
+			}
 		}
 	}
 }

@@ -98,13 +98,13 @@ namespace EPlayer.Controls
 		{
 			var link = (Hyperlink)e.OriginalSource;
 			//TODO: Do better
-			MainWindow.RequestArtist(App.MusicLibrary.Artists.First(art => art.Name == link.NavigateUri.OriginalString));
+			//MainWindow.RequestArtist(App.MusicLibrary.Artists.First(art => art.Name == link.NavigateUri.OriginalString));
 		}
 		private void AlbumHyperlink_Click(object sender, RoutedEventArgs e)
 		{
 			var link = (Hyperlink)e.OriginalSource;
 			//TODO: Do better
-			MainWindow.RequestAlbum(App.MusicLibrary.Albums.First(alb => alb.Name == link.NavigateUri.OriginalString));
+			//MainWindow.RequestAlbum(App.MusicLibrary.Albums.First(alb => alb.Name == link.NavigateUri.OriginalString));
 		}
 
 		private Song[] CastSelectedItems() => SelectedItems.Cast<Song>().ToArray();

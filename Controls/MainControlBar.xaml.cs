@@ -1,14 +1,11 @@
-﻿using System;
-using System.Threading;
+﻿
 using System.Windows;
 using System.Windows.Controls;
 using EPlayer.Media;
-using EPlayer.Models;
-using NAudio.Wave;
 
 namespace EPlayer.Controls
 {
-	public partial class MediaControlBar : UserControl
+	public partial class MainControlBar : UserControl
 	{
 		private readonly MediaController Controller = new MediaController();
 		public MusicPlayer Player
@@ -17,7 +14,7 @@ namespace EPlayer.Controls
 			set => Controller.Player = value;
 		}
 
-		public MediaControlBar() => InitializeComponent();
+		public MainControlBar() => InitializeComponent();
 
 		private void UserControl_Loaded(object sender, RoutedEventArgs e)
 		{

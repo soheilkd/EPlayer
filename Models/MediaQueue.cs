@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
 
 namespace EPlayer.Models
 {
@@ -59,6 +61,40 @@ namespace EPlayer.Models
 		{
 			MovePrevious();
 			return Current;
+		}
+
+
+		public void AddFromPaths(params string[] paths)
+		{
+			for (var i = 0; i < paths.Length; i++)
+			{
+				var files = Directory.GetFiles(paths[i], "*.*", SearchOption.AllDirectories);
+				AddNewFiles(files);
+			}
+		}
+		public void RemoveDeletedFiles()
+		{
+			for (var i = 0; i < Count; i++)
+			{
+				if (!File.Exists(this[i].FilePath))
+				{
+					RemoveAt(i);
+					i--;
+				}
+			}
+		}
+		public void AddNewFiles(string[] files)
+		{
+			Song holder;
+			for (var i = 0; i < files.Length; i++)
+			{
+				if (!this.Any(item => item.FilePath == files[i]))
+				{
+					holder = new Song(files[i]);
+					if (!holder.PossiblyCorrupt)
+						Add(holder);
+				}
+			}
 		}
 	}
 }
