@@ -12,7 +12,7 @@ namespace EPlayer
 	{
 		public static double Volume 
 		{
-			get => double.Parse(Get());
+			get => double.Parse(Get("1"));
 			set => Set(value); 
 		}
 		public static string LastPath
@@ -21,13 +21,13 @@ namespace EPlayer
 			set => Set(value);
 		}
 		public static Size LastSize 
-		{ 
-			get => Size.Parse(Get()); 
+		{
+			get => Size.Parse(Get("1000,500"));
 			set => Set(value); 
 		}
 		public static PlayMode PlayMode
 		{
-			get => Enum.Parse<PlayMode>(Get());
+			get => Enum.Parse<PlayMode>(Get("None"));
 			set => Set(value); 
 		}
 		public static IEnumerable<string> ScanFolders 
@@ -37,13 +37,13 @@ namespace EPlayer
 		}
 		public static int MediaDeviceIndex
 		{
-			get => int.Parse(Get());
+			get => int.Parse(Get("0"));
 			set => Set(value);
 		}
 
-		private static string Get([CallerMemberName] string name = "")
+		private static string Get(string defaultString = default, [CallerMemberName] string name = "")
 		{
-			return ConfigurationManager.AppSettings.Get(name);
+			return ConfigurationManager.AppSettings.Get(name) ?? defaultString;
 		}
 		private static void Set<T>(T value, [CallerMemberName] string name = "")
 		{

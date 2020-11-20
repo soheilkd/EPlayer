@@ -4,6 +4,8 @@
 	{
 		Repeat,
 		RepeatOne,
-		Shuffle
+		Shuffle,
+		Single,
+		None
 	}
 }

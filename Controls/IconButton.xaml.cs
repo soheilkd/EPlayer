@@ -14,12 +14,12 @@ namespace EPlayer.Controls
 
 		static IconButton()
 		{
-			//Define default value 20 for FontSize
-			FontSizeProperty.OverrideDefault(20D);
-			//Define default value of LightGray for Foreground
-			ForegroundProperty.OverrideDefault(Brushes.LightGray, false);
+			//Define default value 26 for FontSize
+			FontSizeProperty.OverrideDefault(26D);
 			//Define default value of Transparent for background
 			BackgroundProperty.OverrideDefault(Brushes.Transparent, false);
+			//Define default content
+			ContentProperty.OverrideDefault(SegoeIcon.Smile);
 		}
 
 		public static DependencyProperty IconProperty = RegisterProperty(nameof(Icon), nameof(OnIconChange), SegoeIcon.Smile);

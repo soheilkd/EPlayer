@@ -6,7 +6,7 @@ using EPlayer.Extensions;
 using EPlayer.Models;
 using EPlayer.Serialization;
 
-namespace EPlayer.Library
+namespace EPlayer.MusicLibrary
 {
 	//For saving the library data to a file to retrieve 
 	[Serializable]

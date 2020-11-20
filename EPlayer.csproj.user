@@ -7,54 +7,54 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Controls\MediaButtons.xaml.cs">
+    <Compile Update="Controls\Media\MediaButtons.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\AlbumPage.xaml.cs">
+    <Compile Update="Controls\Media\ArtworkImage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\ArtistPage.xaml.cs">
+    <Compile Update="Views\Pages\AlbumPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\MainPage.xaml.cs">
+    <Compile Update="Views\Pages\ArtistPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\NowPlayingView.xaml.cs">
+    <Compile Update="Views\Pages\MainPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Window1.xaml.cs">
+    <Compile Update="Views\Pages\NowPlayingPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Windows\MiniWindow.xaml.cs">
+    <Compile Update="Views\Windows\MiniWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Controls\MediaButtons.xaml">
+    <Page Update="Controls\Media\MediaButtons.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\AlbumPage.xaml">
+    <Page Update="Controls\Media\ArtworkImage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\ArtistPage.xaml">
+    <Page Update="Views\Pages\AlbumPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pages\MainPage.xaml">
+    <Page Update="Views\Pages\ArtistPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\NowPlayingView.xaml">
+    <Page Update="Views\Pages\MainPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Window1.xaml">
+    <Page Update="Views\Pages\NowPlayingPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Windows\MainWindow.xaml">
+    <Page Update="Views\Windows\MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Windows\MiniWindow.xaml">
+    <Page Update="Views\Windows\MiniWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Windows\PropertiesWindow.xaml">
+    <Page Update="Views\Windows\PropertiesWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

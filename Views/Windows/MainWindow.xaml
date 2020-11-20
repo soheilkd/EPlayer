@@ -1,0 +1,27 @@
+﻿<controls1:AdonisWindow
+	xmlns:controls1="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+				  x:Class="EPlayer.Windows.MainWindow" Closing="AdonisWindow_Closing"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Height="500" Width="1000"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Loaded="Window_Loaded"
+		xmlns:controls="clr-namespace:EPlayer.Controls.Media"
+				  Title="MainWindow">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<Image x:Name="BackgroundImage" Grid.RowSpan="2" Stretch="Fill" >
+			<Image.Effect>
+				<BlurEffect Radius="100" KernelType="Gaussian"/>
+			</Image.Effect>
+		</Image>
+
+		<Frame x:Name="PageFrame" Source="../Pages/MainPage.xaml"/>
+
+		<controls:MainControlBar x:Name="ControlBar" Grid.Row="1" />
+
+	</Grid>
+	<Window.Style>
+		<Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}"/>
+	</Window.Style>
+</controls1:AdonisWindow>

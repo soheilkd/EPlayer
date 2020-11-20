@@ -33,20 +33,22 @@ namespace EPlayer.Extensions
 			return stream;
 		}
 
-		public static ImageSource ToImageSource(this System.Drawing.Image image)
-		{
-			using var ms = new MemoryStream();
+		/*
+	public static ImageSource ToImageSource(this System.Drawing.Image image)
+	{
+		return null;
+		using var ms = new MemoryStream();
 
-			image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-			ms.Seek(0, SeekOrigin.Begin);
+		image.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
+		ms.Seek(0, SeekOrigin.Begin);
 
-			var bitmapImage = new BitmapImage();
-			bitmapImage.BeginInit();
-			bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-			bitmapImage.StreamSource = ms;
-			bitmapImage.EndInit();
+		var bitmapImage = new BitmapImage();
+		bitmapImage.BeginInit();
+		bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+		bitmapImage.StreamSource = ms;
+		bitmapImage.EndInit();
 
-			return bitmapImage;
-		}
-	}
+		return bitmapImage;
+	}*/
+}
 }

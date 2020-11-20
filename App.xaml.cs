@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Runtime;
 using System.Windows;
-using EPlayer.Library;
 using EPlayer.Media;
 using EPlayer.Models;
+using EPlayer.MusicLibrary;
 using EPlayer.Serialization;
 using SingleInstanceCore;
 
@@ -14,7 +14,7 @@ namespace EPlayer
 		public static event TypedEventHandler<string[]> InstanceInvoked;
 
 		public static MusicPlayer MusicPlayer { get; } = new MusicPlayer();
-		public static MusicLibrary MusicLibrary { get; } = new MusicLibrary();
+		public static Library MusicLibrary { get; } = new Library();
 
 		public App()
 		{

@@ -37,8 +37,7 @@ namespace EPlayer.Controls
 		{
 			foreach (Song song in SelectedItems)
 			{
-				//Super unprofessinal to add installed app on my pc only, but it'll make my life easier anyway
-				Process.Start(@"D:\Apps\Mp3tag\Mp3tag.exe", $"\"{song.FilePath}\"");
+				//
 			}
 		}
 		private void Menu_RemoveClick(object sender, RoutedEventArgs e)

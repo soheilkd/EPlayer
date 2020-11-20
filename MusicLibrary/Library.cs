@@ -9,9 +9,10 @@ using EPlayer.Extensions;
 using EPlayer.Models;
 using EPlayer.Serialization;
 
-namespace EPlayer.Library
+namespace EPlayer.MusicLibrary
 {
-	public class MusicLibrary
+	//TODO: Needs refactor
+	public class Library
 	{
 		private LibraryData data = new LibraryData();
 		private static string LibraryPath => PathHelper.AppdataPath + "Library.bin";
@@ -22,7 +23,7 @@ namespace EPlayer.Library
 
 		public event TypedEventHandler<Song> NewSongAdded;
 
-		public MusicLibrary()
+		public Library()
 		{
 			Load();
 		}
@@ -38,7 +39,7 @@ namespace EPlayer.Library
 
 		public void RefreshLibraries()
 		{
-			var common  = Environment.GetFolderPath(Environment.SpecialFolder.CommonMusic);
+			var common = Environment.GetFolderPath(Environment.SpecialFolder.CommonMusic);
 			var music = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic);
 			ScanFolder(common);
 			ScanFolder(music);
@@ -92,14 +93,46 @@ namespace EPlayer.Library
 		{
 			if (till == default)
 				till = DateTime.Now;
-
+			throw new NotImplementedException();
 			return from song in Songs
-				   where song.Plays.Since(since).Till(till).Any()
-				   orderby song.Plays.Since(since).Till(till).Count()
+				  // where song.Plays.Since(since).Till(till).Any()
+				  // orderby song.Plays.Since(since).Till(till).Count()
 				   select song;
 		}
 
 
+		public void AddFromPaths(params string[] paths)
+		{
+			for (var i = 0; i < paths.Length; i++)
+			{
+				var files = Directory.GetFiles(paths[i], "*.*", SearchOption.AllDirectories);
+				AddNewFiles(files);
+			}
+		}
 
+		public void RemoveDeletedFiles()
+		{
+			for (var i = 0; i < Songs.Count; i++)
+			{
+				if (!File.Exists(Songs[i].FilePath))
+				{
+					Songs.RemoveAt(i);
+					i--;
+				}
+			}
+		}
+		public void AddNewFiles(string[] files)
+		{
+			Song holder;
+			for (var i = 0; i < files.Length; i++)
+			{
+				if (!Songs.Any(item => item.FilePath == files[i]))
+				{
+					holder = new Song(files[i]);
+					if (!holder.PossiblyCorrupt)
+						Songs.Add(holder);
+				}
+			}
+		}
 	}
 }
